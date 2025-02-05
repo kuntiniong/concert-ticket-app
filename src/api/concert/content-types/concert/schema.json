@@ -13,32 +13,27 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "description": {
-      "type": "text"
-    },
-    "date": {
-      "type": "date",
-      "required": true
+      "type": "string"
     },
     "venue": {
       "type": "string"
     },
     "price": {
-      "type": "decimal",
-      "required": true
+      "type": "decimal"
+    },
+    "concertDateTime": {
+      "type": "datetime"
     },
     "availableTickets": {
-      "type": "integer",
-      "required": true
+      "type": "integer"
     },
     "tickets": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::ticket.ticket",
-      "mappedBy": "concert"
+      "target": "api::ticket.ticket"
     }
   }
 }

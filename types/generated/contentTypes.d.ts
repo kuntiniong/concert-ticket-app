@@ -381,20 +381,20 @@ export interface ApiConcertConcert extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    availableTickets: Schema.Attribute.Integer & Schema.Attribute.Required;
+    availableTickets: Schema.Attribute.Integer;
+    concertDateTime: Schema.Attribute.DateTime;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    date: Schema.Attribute.Date & Schema.Attribute.Required;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::concert.concert'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    name: Schema.Attribute.String;
+    price: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
     tickets: Schema.Attribute.Relation<'oneToMany', 'api::ticket.ticket'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -407,7 +407,6 @@ export interface ApiConcertConcert extends Struct.CollectionTypeSchema {
 export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
   collectionName: 'tickets';
   info: {
-    description: '';
     displayName: 'Ticket';
     pluralName: 'tickets';
     singularName: 'ticket';
@@ -416,8 +415,6 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    bookingDate: Schema.Attribute.DateTime;
-    concert: Schema.Attribute.Relation<'manyToOne', 'api::concert.concert'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -427,16 +424,13 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
       'api::ticket.ticket'
     > &
       Schema.Attribute.Private;
-    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Integer & Schema.Attribute.Required;
+    purchaseDateTime: Schema.Attribute.DateTime;
+    requestedQuantity: Schema.Attribute.Integer;
+    totalPrice: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
   };
 }
 
@@ -926,7 +920,6 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    tickets: Schema.Attribute.Relation<'oneToMany', 'api::ticket.ticket'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
