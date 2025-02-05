@@ -1,0 +1,20 @@
+erDiagram
+    Concert {
+        int concertId PK
+        string name
+        string description
+        string venue
+        decimal price
+        datetime concertDateTime
+        int availableTickets
+    }
+
+    Ticket {
+        int ticketId PK
+        int concertId FK
+        int requestedQuantity
+        decimal totalPrice
+        datetime purchaseDateTime
+    }
+
+    Concert ||--o{ Ticket : "has"

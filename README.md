@@ -6,7 +6,12 @@
 
 ## Workflow
 ### 1. Setting up a Strapi Environment as the Admin-side CMS
-- 1.1 Define the data models (User, Concert, Ticket) with the Content-Type Builder in Strapi CMS
+- 1.1 Define the data models (Concert, Ticket) with the Content-Type Builder in Strapi CMS
+
+<div style="text-align: center;">
+  <img src="readme-images/er-diagram.png" width="200" height="400">
+</div>
+
 - 1.2 Create a controller to handle the ticket booking logic (e.g. update tickets availability, etc.)
 - 1.3 Setup a route to connect the controller to the API endpoints
 
@@ -15,3 +20,10 @@
 > *the script is stored in the Google Sheets itself, NOT in this repo*
 
 ### 3. Building the Frontend
+
+
+## Improvement
+### Data Models
+- add user auth
+- add a booking period
+- add seat preferences and different ticket price point
