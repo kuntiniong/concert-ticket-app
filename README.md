@@ -1,14 +1,14 @@
 # Full Stack Concert Ticket Web App
 
 ## Features
-- Responsive frontend for the concert ticketing page
+- Responsive frontend
 - Two Content Management Systems (CMS) for both technical (admin) and non-technical users:
   - Strapi Admin Panel -> manage API permissions and backend data
   - Google Sheets -> for easy concert/ event management
 - Real-time update and synchronization across the frontend, Strapi backend and Google Sheets
 
 ## Tech Stack
-- Frontend: HTML, CSS and JavaScript
+- Frontend: React and shadcn/Tailwind CSS
 - Backend: Strapi (w/ SQLite)
 
 - Testing: Postman and ngrok
@@ -51,10 +51,13 @@ Executions:
 - 2.1 Write a Google Apps Script to sync Google Sheets with Strapi and perform real-time (i.e. when the spreadsheet is on editing) CRUD operations
 - 2.2 Setup a installable trigger to enable script automation for external API calls (to Strapi)
 - 2.3 Create a tunnel for the local Strapi server to the internet using ngrok for testing
-> *the script should be running in Google's cloud <- strapiSync.js*
+> *the script should be running in Google's server*
 
 ### 3. Building the Frontend
-
+- 3.1 Import the shadcn components through the shadcn CLI
+- 3.2 Setup two pages and App Router -> Home Page and Booking Page
+- 3.3 Integrate state management with React hooks
+- 3.4 Integrate API calls using Fetch
 
 
 
