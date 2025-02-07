@@ -21,7 +21,6 @@
 5. Create a ngrok account on the website and add your API key ```ngrok config add-authtoken your-api-key```
 6. Expose the localhost to the public by ```ngrok http 1337```
 7. Create a google account and go to [Google Sheets](https://docs.google.com/spreadsheets/)
-8. 
 
 ## Workflow
 ### 1. Setting up a Strapi Environment as the Admin-side CMS
@@ -48,18 +47,35 @@ Executions:
 - 1.3 Setup a route to connect the controller to the API endpoints and tested with Postman
 
 ### 2. Integrating Google Sheets as the User-side CMS
-- 2.1 Write a Google Apps Script to sync Google Sheets with Strapi and perform real-time (i.e. when the spreadsheet is on editing) CRUD operations
+- 2.1 Write a Google Apps Script to sync Google Sheets with Strapi and perform real-time CRUD operations (i.e. when the spreadsheet is on editing)
 - 2.2 Setup a installable trigger to enable script automation for external API calls (to Strapi)
-- 2.3 Create a tunnel for the local Strapi server to the internet using ngrok for testing
+- 2.3 Create a tunnel to expose the local Strapi server to the internet using ngrok for testing
 > *the script should be running in Google's server*
 
 ### 3. Building the Frontend
-- 3.1 Import the shadcn components through the shadcn CLI
-- 3.2 Setup two pages and App Router -> Home Page and Booking Page
+- 3.1 Import and customize the shadcn components through the shadcn CLI ```npx shadcn@latest add card```
+- 3.2 Create a home page with concert info cards in grid layout and popups for the purchasing stage
 - 3.3 Integrate state management with React hooks
 - 3.4 Integrate API calls using Fetch
 
+#### File Structure for the Frontend:
+```
+frontend/src/
+          ├── components/
+          │   ├── CardGrid.jsx
+          │   ├── InfoCard.jsx
+          │   └── Modal.jsx // ticket booking popup
+          ├── pages/
+          │   └── Home.jsx
+          ├── services/
+          │   └── api.js
+          ├── App.jsx
+          ├── index.css    // only one global css file for Tailwind
+          └── main.jsx
+```
 
+### 4. Synchronize the Frontend with Google Sheets CMS
+- 4.1 Update the Google Apps Script to allow Google Sheets receiving an API call from the Strapi server when a purchase is made at the frontend
 
 <!-- ## Improvement
 ### Data Models
