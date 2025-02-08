@@ -53,7 +53,7 @@ Executions:
 > *the script should be running in Google's server*
 
 ### 3. Building the Frontend
-- 3.1 Import and customize the shadcn components through the shadcn CLI ```npx shadcn@latest add card```
+- 3.1 Import and customize the shadcn components through the shadcn CLI ```npx shadcn@latest add card dialog button input```
 - 3.2 Create a home page with concert info cards in grid layout and popups for the purchasing stage
 - 3.3 Integrate state management with React hooks
 - 3.4 Integrate API calls using Fetch
@@ -61,16 +61,15 @@ Executions:
 #### File Structure for the Frontend:
 ```
 frontend/src/
-          ├── components/
-          │   ├── CardGrid.jsx
-          │   ├── InfoCard.jsx
-          │   └── Modal.jsx // ticket booking popup
-          ├── pages/
-          │   └── Home.jsx
+          ├── components/ui/ // imported from shadcn
+          │   ├── button.jsx
+          │   ├── card.jsx
+          │   ├── dialog.jsx // ticket booking popup
+          │   └── input.jsx  // input quantity
           ├── services/
           │   └── api.js
           ├── App.jsx
-          ├── index.css    // only one global css file for Tailwind
+          ├── index.css      // only one global css file for Tailwind
           └── main.jsx
 ```
 
