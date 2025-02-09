@@ -15,32 +15,32 @@
 
 ## Run the App
 
-### Strapi CMS
+### I. Strapi CMS
 1. Install [node.js](https://nodejs.org/en)
-2. Open a new terminal for the local Strapi server and type
+2. Initialize the Strapi dependencies by running the following command:
 ```
 cd backend
 npm install
 ```
-3. Create a .env file ```touch .env``` and simply copy [.env.example](backend/.env.example) and paste to it
+3. Create a .env file with  ```touch .env``` and simply copy the content in [.env.example](backend/.env.example) and paste to it
 4. Run the local server with ```npm run develop``` and create an Strapi account in the admin panel
 5. Install and get your API key from [ngrok](https://ngrok.com/) and set a path for the environment variables
-6. Open a new terminal for the ngrok tunnel and type
+6. Open a separate terminal for the ngrok tunnel and run the following command:
 ```
 cd backend
 ngrok config add-authtoken your-api-key
 ngrok http 1337
 ```
 
-### Google Sheets CMS
+### II. Google Sheets CMS
 7. Go to [Google Sheets](https://docs.google.com/spreadsheets/) and import [ConcertTicketCMS.xlsx](google-sheets-cms/ConcertTicketCMS.xlsx)
 8. Go to the Extensions tab and paste [StrapiSync.js](google-sheets-cms/StrapiSync.js) in the Editor
-9. Go back to Strapi Admin Panel -> Settings -> API Tokens to generate an API token with full access
+9. Go back to ```Strapi Admin Panel -> Settings -> API Tokens``` to generate an API token with full access
 10. Paste the API key and ngrok URL in StrapiSync.js
 
 
-### Frontend
-11. Open a new terminal for the frontend and type 
+### III. Frontend
+11. Setup the frontend by running the following command in a separate terminal:
 ```
 cd frontend
 npm install
@@ -79,7 +79,7 @@ Executions:
 
 ### 3. Building the Frontend
 - 3.1 Import the shadcn components through the shadcn CLI ```npx shadcn@latest add card dialog button input```
-- 3.2 Create the components and the home page and manage state with state hooks
+- 3.2 Create the components and the home page and manage the states with state hooks
 - 3.3 Integrate API calls using Fetch and effect hooks
 
 #### File Structure for the Frontend:

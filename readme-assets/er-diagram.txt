@@ -1,3 +1,5 @@
+// paste this to mermaid.live
+
 erDiagram
     Concert {
         int concertId PK
