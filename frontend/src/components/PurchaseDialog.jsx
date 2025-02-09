@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-function PurchaseDialog({ isOpen, setIsOpen, concert }) {
+function PurchaseDialog({ isOpen, setIsOpen, concert, handleUpdateQuantity }) {
   // state management 
   const [purchaseStatus, setPurchaseStatus] = useState(null); // for system message
   const [quantity, setQuantity] = useState(1);
@@ -28,10 +28,10 @@ function PurchaseDialog({ isOpen, setIsOpen, concert }) {
   };
 
   const isAvailable = () => {
-    return concert.availableTickets > quantity
-  }
+    return concert.availableTickets >= quantity;
+  };
 
-  const confirmPurchase = () => {
+  const confirmPurchase = async () => {
     if (!isConcertDateValid()) {
       setPurchaseStatus("Cannot purchase tickets for a past concert.");
       return;
@@ -42,24 +42,34 @@ function PurchaseDialog({ isOpen, setIsOpen, concert }) {
       return;
     }
 
-    // simulate a purchase process
-    setTimeout(() => {
+    try {
+      // json payload for strapi must be wrapped in a data object
+      const updatedQuantity = {
+        data: {
+          availableTickets: concert.availableTickets - quantity,
+        },
+      };
+
+      // call the passed func to update the backend and state
+      await handleUpdateQuantity(concert.documentId, updatedQuantity);
+
       setPurchaseStatus(`${quantity} ticket(s) purchased successfully!`);
-      
       concert.availableTickets -= quantity; // update available tickets
 
-      // reset the state after 2 seconds
+      // close the dialog after success
       setTimeout(() => {
         setIsOpen(false);
       }, 2000);
-    }, 1000);
+    } catch (error) {
+      setPurchaseStatus("Failed to complete the purchase. Try again.");
+    }
   };
 
   // onChange func for quantity input box -> passing int explicitly & apply quantity limits for programmatic control
   const handleQuantityChange = (e) => {
     const value = Number.parseInt(e.target.value, 10);
     setQuantity(Math.max(1, Math.min(10, value)));
-  };
+  }
 
   const totalPrice = concert ? concert.price * quantity : 0;
 

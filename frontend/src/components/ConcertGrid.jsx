@@ -1,17 +1,44 @@
-import { useState } from "react"
-import ConcertCard from "./ConcertCard"
-import PurchaseDialog from "./PurchaseDialog"
-import dummyConcerts from "../testing/dummyConcerts.js"
+import { useState, useEffect } from "react";
+import ConcertCard from "./ConcertCard";
+import PurchaseDialog from "./PurchaseDialog";
+import dummyConcerts from "../testing/dummyConcerts.js";
+import { fetchConcerts, updateQuantity } from "../service/api.js";
 
 function ConcertGrid() {
-  const [concerts] = useState(dummyConcerts) // for dynamic update from api calls
-  const [selectedConcert, setSelectedConcert] = useState(null) // pass the selected concert to dialog
-  const [isDialogOpen, setIsDialogOpen] = useState(false) // dialog popups when the button in concert card is pressed
+  const [concerts, setConcerts] = useState(dummyConcerts); // dynamic updates for concerts
+  const [selectedConcert, setSelectedConcert] = useState(null); // pass the selected concert to dialog
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // dialog popups when the button in concert card is pressed
 
   const handlePurchase = (concert) => { // pass as a func prop
-    setSelectedConcert(concert)
-    setIsDialogOpen(true)
-  }
+    setSelectedConcert(concert);
+    setIsDialogOpen(true);
+  };
+
+  // update concert data in state and backend
+  const handleUpdateQuantity = async (documentId, updatedQuantity) => {
+    try {
+      const updatedConcert = await updateQuantity(documentId, updatedQuantity);
+      
+      // update the state with the updated concert
+      setConcerts((prevConcerts) =>
+        prevConcerts.map((concert) =>
+          concert.id === documentId ? updatedConcert : concert
+        )
+      );
+      console.log("Concert updated successfully:", updatedQuantity);
+    } catch (error) {
+      console.error("Error updating concert:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchConcertsData = async () => {
+      const allConcerts = await fetchConcerts();
+      setConcerts(allConcerts.data);
+    };
+
+    fetchConcertsData();
+  }, []); // empty array -> runs only once (e.g. it won't re-render the cards if i open a dialog/ state changes)
 
   return (
     <>
@@ -23,10 +50,11 @@ function ConcertGrid() {
       <PurchaseDialog
         isOpen={isDialogOpen}
         setIsOpen={setIsDialogOpen}
-        concert={selectedConcert} />
+        concert={selectedConcert}
+        handleUpdateQuantity={handleUpdateQuantity} // pass the update function as a prop to dialog
+      />
     </>
   );
 }
 
-export default ConcertGrid
-
+export default ConcertGrid;
