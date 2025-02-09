@@ -13,21 +13,46 @@
 
 - Testing: Postman and ngrok
 
-## Run the App (for Windows)
-1. Install [node.js](https://nodejs.org/en) 
-2. Run the local Strapi server with ``` npm run develop ```
-3. Open the Strapi CMS with the given localhost url
-4. Install [ngrok](https://ngrok.com/) and set a path for the environment variables
-5. Create a ngrok account on the website and add your API key ```ngrok config add-authtoken your-api-key```
-6. Expose the localhost to the public by ```ngrok http 1337```
-7. Create a google account and go to [Google Sheets](https://docs.google.com/spreadsheets/)
+## Run the App
+
+### Strapi CMS
+1. Install [node.js](https://nodejs.org/en)
+2. Open a new terminal for the local Strapi server and type
+```
+cd backend
+npm install
+```
+3. Create a .env file ```touch .env``` and simply copy [.env.example](backend/.env.example) and paste to it
+4. Run the local server with ```npm run develop``` and create an Strapi account in the admin panel
+5. Install and get your API key from [ngrok](https://ngrok.com/) and set a path for the environment variables
+6. Open a new terminal for the ngrok tunnel and type
+```
+cd backend
+ngrok config add-authtoken your-api-key
+ngrok http 1337
+```
+
+### Google Sheets CMS
+7. Go to [Google Sheets](https://docs.google.com/spreadsheets/) and import [ConcertTicketCMS.xlsx](google-sheets-cms/ConcertTicketCMS.xlsx)
+8. Go to the Extensions tab and paste [StrapiSync.js](google-sheets-cms/StrapiSync.js) in the Editor
+9. Go back to Strapi Admin Panel -> Settings -> API Tokens to generate an API token with full access
+10. Paste the API key and ngrok URL in StrapiSync.js
+
+
+### Frontend
+11. Open a new terminal for the frontend and type 
+```
+cd frontend
+npm install
+npm run dev
+```
 
 ## Workflow
 ### 1. Setting up a Strapi Environment as the Admin-side CMS
 - 1.1 Define the data models (Concert, Ticket) with the Content-Type Builder in Strapi CMS
 
 <div style="text-align: center;">
-  <img src="readme-images/er-diagram.png" width="200" height="400">
+  <img src="readme-assets/er-diagram.png" width="200" height="400">
 </div>
 
 - 1.2 Create a controller to handle the ticket booking logic (e.g. update tickets availability, etc.)
@@ -53,23 +78,28 @@ Executions:
 > *the script should be running in Google's server*
 
 ### 3. Building the Frontend
-- 3.1 Import and customize the shadcn components through the shadcn CLI ```npx shadcn@latest add card dialog button input```
-- 3.2 Create a home page with concert info cards in grid layout and popups for the purchasing stage
-- 3.3 Integrate state management with React hooks
-- 3.4 Integrate API calls using Fetch
+- 3.1 Import the shadcn components through the shadcn CLI ```npx shadcn@latest add card dialog button input```
+- 3.2 Create the components and the home page and manage state with state hooks
+- 3.3 Integrate API calls using Fetch and effect hooks
 
 #### File Structure for the Frontend:
 ```
-frontend/src/
-          ├── components/ui/ // imported from shadcn
-          │   ├── button.jsx
-          │   ├── card.jsx
-          │   ├── dialog.jsx // ticket booking popup
-          │   └── input.jsx  // input quantity
-          ├── services/
-          │   └── api.js
+frontend/src
+          ├── components
+          │   ├── ui                  // shadcn components
+          │   │   ├── button.jsx
+          │   │   ├── card.jsx
+          │   │   ├── dialog.jsx
+          │   │   └── input.jsx       // quantity input
+          │   ├── ConcertCard.jsx
+          │   ├── ConcertGrid.jsx     // grid layout
+          │   └── PurchaseDialog.jsx  // purchase popup
+          ├── lib
+          │   └── utils.js
+          ├── testing
+          │   └──dummyConcerts.js     // for testing
           ├── App.jsx
-          ├── index.css      // only one global css file for Tailwind
+          ├── index.css               // tailwind setup
           └── main.jsx
 ```
 
