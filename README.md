@@ -17,9 +17,9 @@ Full stack concert ticketing app with dual CMS (Strapi + Google Sheets)
 <img src="readme-assets/api.png" width="500" height="300">
 
 ## 📚 Content
-- [Tech Stack](#-tech-stack)
-- [Run the App](#-run-the-app)
-- [Workflow](#-workflow)
+- [Tech Stack](#%EF%B8%8F-tech-stack)
+- [Run the App](#%EF%B8%8F-run-the-app)
+- [Workflow](#%EF%B8%8F-workflow)
 - [Improvement](#-improvement)
 - [Resources](#-resources)
 
