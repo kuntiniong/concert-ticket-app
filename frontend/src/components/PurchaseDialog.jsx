@@ -91,7 +91,7 @@ function PurchaseDialog({ isOpen, setIsOpen, concert, handleBook }) {
             <div className="grid grid-cols-3 items-center gap-4">
               <span className="text-right font-medium">Date:</span>
               <div id="date" className="col-span-2">
-                {concert.concertDateTime}
+                {concert.concertDateTime.split("T")[0]}
               </div>
             </div>
 
@@ -102,14 +102,14 @@ function PurchaseDialog({ isOpen, setIsOpen, concert, handleBook }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 items-center gap-4">
+            <div className="grid grid-cols-3 items-center gap-4 mt-4">
               <span className="text-right font-medium">Available Tickets:</span>
               <div id="availableTickets" className="col-span-2">
                 {concert.availableTickets}
               </div>
             </div>
 
-            <div className="grid grid-cols-3 items-center gap-4">
+            <div className="grid grid-cols-3 items-center gap-4 mb-5">
               <span className="text-right font-medium">Quantity:</span>
               <Input
                 id="quantity"
@@ -122,7 +122,7 @@ function PurchaseDialog({ isOpen, setIsOpen, concert, handleBook }) {
               />
             </div>
 
-            <div className="grid grid-cols-3 items-center gap-4">
+            <div className="grid grid-cols-3 items-center gap-4 mb-2">
               <span className="text-right font-medium">Total Price:</span>
               <div id="price" className="col-span-2">
                 ${totalPrice}
