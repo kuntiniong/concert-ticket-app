@@ -1,19 +1,27 @@
 # Full Stack Concert Ticket Web App
 
-## Features
+## ✨ Features
 - Responsive frontend
 - Two Content Management Systems (CMS) for both technical (admin) and non-technical users:
   - Strapi Admin Panel -> manage API permissions and backend data
   - Google Sheets -> for easy concert/ event management
 - Real-time update and synchronization across the frontend, Strapi backend and Google Sheets
 
-## Tech Stack
+<img src="readme-assets/api.png" width="500" height="300">
+
+## 📚 Content
+- [Tech Stack](#🛠️-tech-stack)
+- [Run the App](#▶️-run-the-app)
+- [Workflow](#⚙️-workflow)
+- [Improvement](#🚀-improvement)
+
+## 🛠️ Tech Stack
 - Frontend: React and shadcn/Tailwind CSS
 - Backend: Strapi (w/ SQLite)
 
-- Testing: Postman and ngrok
+- Testing: Postman, ngrok and Vite
 
-## Run the App
+## ▶️ Run the App
 
 ### I. Strapi CMS
 1. Install [node.js](https://nodejs.org/en)
@@ -34,7 +42,8 @@ ngrok http 1337
 
 ### II. Google Sheets CMS
 7. Go to [Google Sheets](https://docs.google.com/spreadsheets/) and import [ConcertTicketCMS.xlsx](google-sheets-cms/ConcertTicketCMS.xlsx)
-8. Go to the Extensions tab and paste [StrapiSync.js](google-sheets-cms/StrapiSync.js) in the Editor
+8. Go to ```Extensions -> Apps Script -> Editor``` and paste [StrapiSync.js](google-sheets-cms/StrapiSync.js)
+9. Go to ```Extensions -> Apps Script -> Trigger``` and setup two triggers: ```fetchLatestTicketAvailability with On Open``` and ```myOnEdit with On Edit```
 9. Go back to ```Strapi Admin Panel -> Settings -> API Tokens``` to generate an API token with full access
 10. Paste the API key and ngrok URL in StrapiSync.js
 
@@ -47,19 +56,17 @@ npm install
 npm run dev
 ```
 
-## Workflow
+## ⚙️ Workflow
 ### 1. Setting up a Strapi Environment as the Admin-side CMS
 - 1.1 Define the data models (Concert, Ticket) with the Content-Type Builder in Strapi CMS
 
-<div style="text-align: center;">
-  <img src="readme-assets/er-diagram.png" width="200" height="400">
-</div>
+<img src="readme-assets/er-diagram.png" width="200" height="400">
 
 - 1.2 Create a controller to handle the ticket booking logic (e.g. update tickets availability, etc.)
 
 ```
 Preconditions:
-1. Fetch concertID
+1. Fetch concert info by documentId
 2. Check if the current time is before the concert date
 3. Check if enough tickets are available
 
@@ -69,11 +76,13 @@ Executions:
 6. Update the concert's available tickets
 ```
 
-- 1.3 Setup a route to connect the controller to the API endpoints and tested with Postman
+- 1.3 Setup a route to connect the controller to the API endpoints and test with Postman
 
 ### 2. Integrating Google Sheets as the User-side CMS
-- 2.1 Write a Google Apps Script to sync Google Sheets with Strapi and perform real-time CRUD operations (i.e. when the spreadsheet is on editing)
-- 2.2 Setup a installable trigger to enable script automation for external API calls (to Strapi)
+- 2.1 Write a Google Apps Script to integrate two features using API calls:
+  - i. Perform real-time CRUD operations (i.e. when the spreadsheet is on editing) from Sheets to Strapi 
+  - ii. Fetch ticket quantity updates from Strapi to Sheets
+- 2.2 Setup installable triggers to enable script automation for external API calls
 - 2.3 Create a tunnel to expose the local Strapi server to the internet using ngrok for testing
 > *the script should be running in Google's server*
 
@@ -103,11 +112,19 @@ frontend/src
           └── main.jsx
 ```
 
-### 4. Synchronize the Frontend with Google Sheets CMS
-- 4.1 Update the Google Apps Script to allow Google Sheets receiving an API call from the Strapi server when a purchase is made at the frontend
+## 🚀 Improvement
+### UX
+- Add search bar & filter
+- Enhance error handling
+- Add loading screen
 
-<!-- ## Improvement
 ### Data Models
-- add user auth
-- add a booking period
-- add seat preferences and different ticket price point -->
+- Add user authentication
+- Add a booking period
+- Add seat preferences and different ticket price point
+
+### Performance
+- Use webhooks for real-time API calling
+
+### Security
+- Enhance API token handling and authorization
