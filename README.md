@@ -17,11 +17,11 @@ Full stack concert ticketing app with dual CMS (Strapi + Google Sheets)
 <img src="readme-assets/api.png" width="500" height="300">
 
 ## 📚 Content
-- [Tech Stack](#🛠️-tech-stack)
-- [Run the App](#▶️-run-the-app)
-- [Workflow](#⚙️-workflow)
-- [Improvement](#🚀-improvement)
-- [Resources](#🔗-resources)
+- [Tech Stack](#-tech-stack)
+- [Run the App](#-run-the-app)
+- [Workflow](#-workflow)
+- [Improvement](#-improvement)
+- [Resources](#-resources)
 
 ## 🛠️ Tech Stack
 - Frontend: React and shadcn/Tailwind CSS
