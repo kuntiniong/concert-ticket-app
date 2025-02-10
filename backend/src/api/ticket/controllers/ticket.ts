@@ -6,12 +6,14 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::ticket.ticket', ({ strapi }) => ({
   async bookTickets(ctx) {
-    const { concertId, requestedQuantity } = ctx.request.body;
+    const { documentId, requestedQuantity } = ctx.request.body;
 
     try {
       // Preconditions:
-      // 1. fetch concertID
-      const concert = await strapi.entityService.findOne('api::concert.concert', concertId);
+      // 1. fetch concert with document id
+      const concert = await strapi.documents('api::concert.concert').findOne({
+        documentId,
+      });
 
       if (!concert) {
         return ctx.badRequest('Concert not found');
@@ -37,7 +39,7 @@ module.exports = createCoreController('api::ticket.ticket', ({ strapi }) => ({
       // 5. create the ticket
       const ticket = await strapi.entityService.create('api::ticket.ticket', {
         data: {
-          concertId,
+          documentId,
           requestedQuantity,
           totalPrice,
           purchaseDateTime: currentTime,
@@ -45,7 +47,8 @@ module.exports = createCoreController('api::ticket.ticket', ({ strapi }) => ({
       });
 
       // 6. update the concert's available tickets
-      await strapi.entityService.update('api::concert.concert', concertId, {
+      await strapi.documents('api::concert.concert').update({
+        documentId: concert.documentId, // Use the documentId of the concert
         data: {
           availableTickets: concert.availableTickets - requestedQuantity,
         },
@@ -53,7 +56,7 @@ module.exports = createCoreController('api::ticket.ticket', ({ strapi }) => ({
 
       return ticket;
     } catch (err) {
-      strapi.log.error(err); // Log errors for debugging
+      strapi.log.error(err);
       return ctx.internalServerError('Something went wrong');
     }
   },

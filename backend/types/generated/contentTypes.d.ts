@@ -378,7 +378,7 @@ export interface ApiConcertConcert extends Struct.CollectionTypeSchema {
     singularName: 'concert';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     availableTickets: Schema.Attribute.Integer;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ConcertCard from "./ConcertCard";
 import PurchaseDialog from "./PurchaseDialog";
 import dummyConcerts from "../testing/dummyConcerts.js";
-import { fetchConcerts, updateQuantity } from "../service/api.js";
+import { fetchConcerts, book } from "../service/api.js";
 
 function ConcertGrid() {
   const [concerts, setConcerts] = useState(dummyConcerts); // dynamic updates for concerts
@@ -15,22 +15,24 @@ function ConcertGrid() {
   };
 
   // update concert data in state and backend
-  const handleUpdateQuantity = async (documentId, updatedQuantity) => {
+  const handleBook = async (documentId, requestedQuantity) => {
     try {
-      const updatedConcert = await updateQuantity(documentId, updatedQuantity);
-      
+      const updatedConcert = await book(documentId, requestedQuantity);
+  
       // update the state with the updated concert
       setConcerts((prevConcerts) =>
         prevConcerts.map((concert) =>
-          concert.id === documentId ? updatedConcert : concert
+          concert.documentId === documentId
+            ? { ...concert, availableTickets: concert.availableTickets - requestedQuantity}
+            : concert // update the quantity after making the purchase (without re-rendering)
         )
       );
-      console.log("Concert updated successfully:", updatedQuantity);
+      console.log("Concert updated successfully:", updatedConcert);
     } catch (error) {
       console.error("Error updating concert:", error);
     }
   };
-
+ 
   useEffect(() => {
     const fetchConcertsData = async () => {
       const allConcerts = await fetchConcerts();
@@ -51,7 +53,7 @@ function ConcertGrid() {
         isOpen={isDialogOpen}
         setIsOpen={setIsDialogOpen}
         concert={selectedConcert}
-        handleUpdateQuantity={handleUpdateQuantity} // pass the update function as a prop to dialog
+        handleBook={handleBook} // pass the update function as a prop to dialog
       />
     </>
   );

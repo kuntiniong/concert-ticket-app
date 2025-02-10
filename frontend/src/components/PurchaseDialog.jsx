@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-function PurchaseDialog({ isOpen, setIsOpen, concert, handleUpdateQuantity }) {
+function PurchaseDialog({ isOpen, setIsOpen, concert, handleBook }) {
   // state management 
   const [purchaseStatus, setPurchaseStatus] = useState(null); // for system message
   const [quantity, setQuantity] = useState(1);
@@ -43,19 +43,12 @@ function PurchaseDialog({ isOpen, setIsOpen, concert, handleUpdateQuantity }) {
     }
 
     try {
-      // json payload for strapi must be wrapped in a data object
-      const updatedQuantity = {
-        data: {
-          availableTickets: concert.availableTickets - quantity,
-        },
-      };
-
       // call the passed func to update the backend and state
-      await handleUpdateQuantity(concert.documentId, updatedQuantity);
+      await handleBook(concert.documentId, quantity);
 
       setPurchaseStatus(`${quantity} ticket(s) purchased successfully!`);
-      concert.availableTickets -= quantity; // update available tickets
-
+      concert.availableTickets -= quantity; //  update locally (before the dialog is closed)
+    
       // close the dialog after success
       setTimeout(() => {
         setIsOpen(false);
