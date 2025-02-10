@@ -1,10 +1,17 @@
 # Full Stack Concert Ticket Web App
+Full stack concert ticketing app with dual CMS (Strapi + Google Sheets)
 
 ## ✨ Features
 - Responsive frontend
+
+<img src="readme-assets/frontend.gif" width="580" height="400">
+
 - Two Content Management Systems (CMS) for both technical (admin) and non-technical users:
   - Strapi Admin Panel -> manage API permissions and backend data
   - Google Sheets -> for easy concert/ event management
+
+<img src="readme-assets/sheets.gif" width="580" height="250">
+  
 - Real-time update and synchronization across the frontend, Strapi backend and Google Sheets
 
 <img src="readme-assets/api.png" width="500" height="300">
@@ -14,6 +21,7 @@
 - [Run the App](#▶️-run-the-app)
 - [Workflow](#⚙️-workflow)
 - [Improvement](#🚀-improvement)
+- [Resources](#🔗-resources)
 
 ## 🛠️ Tech Stack
 - Frontend: React and shadcn/Tailwind CSS
@@ -108,7 +116,7 @@ frontend/src
           ├── testing
           │   └──dummyConcerts.js     // for testing
           ├── App.jsx
-          ├── index.css               // tailwind setup
+          ├── index.css               // tailwind & shadcn setup
           └── main.jsx
 ```
 
@@ -128,3 +136,6 @@ frontend/src
 
 ### Security
 - Enhance API token handling and authorization
+
+## 🔗 Resources
+- [shadcn theme generator](https://zippystarter.com/tools/shadcn-ui-theme-generator)
